@@ -1,0 +1,32 @@
+输入整数4， 输出：
+```
+1
+2*3
+4*5*6
+7*8*9*10
+7*8*9*10
+4*5*6
+2*3
+1
+```
+JS
+```
+function main(x) {
+  var arr = [], result = []
+  var sum = 0;
+  for (var i=0;i<x;i++) {
+    for (var j=0;j<i+1;j++) {
+      arr.push(++sum)
+    }
+    var str = arr.join('*')
+    result.push(str)
+    arr = []
+    console.log(str)
+  }
+  while(result.length !== 0) {
+    console.log(result.pop())
+  }
+}
+test = prompt()
+main(test)
+```
