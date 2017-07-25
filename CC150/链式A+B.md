@@ -86,6 +86,8 @@ public class Plus {
 }
 ```
 另一种情况：所有数位正向存放
+
+思路：通过PartialSum类实现从低位相加，并将进位传递到高位
 ```java
 import java.util.*;
 
