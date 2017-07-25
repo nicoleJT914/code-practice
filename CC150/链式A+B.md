@@ -85,3 +85,79 @@ public class Plus {
     }
 }
 ```
+另一种情况：所有数位正向存放
+```java
+import java.util.*;
+
+public class Plus {
+    private class ListNode {
+        int val;
+        ListNode next = null;
+        ListNode prev = null;
+
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+    private class PartialSum {
+        ListNode sum = null;
+        int carry = 0;
+    }
+    public int length(ListNode l) {
+        int len = 0;
+        while (l != null) {
+            ++len;
+            l = l.next;
+        }
+        return len;
+    }
+    public ListNode addList(ListNode a, ListNode b) {
+        int len1 = length(a);
+        int len2 = length(b);
+        // 对较短链表进行补零
+        if (len1 < len2) {
+            a = padList(a, len2-len1);
+        }else {
+            b = padList(b, len1-len2);
+        }
+        // 对两个链表求和
+        PartialSum sum = addListsHelper(a, b);
+        // 判断是否有进位
+        if (sum.carry == 0) {
+            return sum.sum;
+        }else {
+            ListNode result = inserBefore(sum.sum, sum.carry);
+            return result;
+        }
+    }
+    public ListNode padList(ListNode l, int padding) {
+        ListNode head = l;
+        for (int i=0; i<padding; i++) {
+            ListNode n = new ListNode(0);
+            head.prev = n;
+            n.next = head;
+            head = n;
+        }
+        return head;
+    }
+    public PartialSum addListsHelper(ListNode a, ListNode b) {
+        if (a == null && b == null)
+            return new PartialSum();
+        PartialSum sum = addListsHelper(a.next, b.next);
+        int value = a.val+b.val+sum.carry;
+        ListNode result = inserBefore(sum.sum, value%10);
+        sum.sum = result;
+        sum.carry = value/10;
+        return sum;
+    }
+    public ListNode inserBefore(ListNode l, int value) {
+        ListNode n = new ListNode(value);
+        if (l != null) {
+            l.prev = n;
+            n.next = l;
+        }
+        return n;
+    }
+}
+
+```
