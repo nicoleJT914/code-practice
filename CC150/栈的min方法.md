@@ -25,7 +25,7 @@ public class StackWithMin extends Stack<NodeWithMin> {
     }
 }
 ```
-思路2：将最小值重新存到另一个栈中。
+思路2：将最小值重新存到另一个栈中。(占用空间小)
 ```java
 public class StackWithMin2 extends Stack<Integer> {
     Stack<Integer> s2;
